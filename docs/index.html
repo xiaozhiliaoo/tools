@@ -12,8 +12,52 @@
     <script src="plugins/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
     <script src="../lvt4js.js"></script>
     <script type="text/javascript">
+
+        /**
+         *
+         * @param d3 汇率 exchangeRate
+         * @param e3 油价折合美元（元/桶）oilPriceDollars
+         * @param f3 销量（吨） sales
+         * @returns {number}
+         */
+        function calculateScore(d3, e3, f3) {
+            const d3Value = parseFloat(d3);
+            const e3Value = parseFloat(e3);
+            const f3Value = parseFloat(f3);
+
+            let result;
+
+            if (e3Value <= 65) {
+                result = 0;
+            } else if (e3Value <= 70) {
+                result = (e3Value - 65) * 0.2;
+            } else if (e3Value <= 75) {
+                result = (e3Value - 65) * 0.25 - 0.25;
+            } else if (e3Value <= 80) {
+                result = (e3Value - 65) * 0.3 - 0.75;
+            } else if (e3Value <= 85) {
+                result = (e3Value - 65) * 0.35 - 1.5;
+            } else {
+                result = (e3Value - 65) * 0.4 - 2.5;
+            }
+
+            return result * d3Value * f3Value * 7.45;
+        }
+
         function calc() {
-           alert($('#formdata-view1').formData())
+
+
+            const gasPriceTax = $('#formdata-view1 input[name="gasPriceTax"]').val();
+            let gasPriceNoTax = parseFloat(gasPriceTax) / 1.13;
+            const exchangeRate = $('#formdata-view1 input[name="exchangeRate"]').val();
+            let oilPriceDollars = parseFloat(gasPriceNoTax) / exchangeRate / 7.45;
+            const sales = $('#formdata-view1 input[name="sales"]').val();
+
+
+            const rst = calculateScore(exchangeRate, oilPriceDollars, sales);
+            $('#formdata-view1 input[name="gasPriceNoTax"]').val(gasPriceNoTax.toFixed(2));
+            $('#formdata-view1 input[name="oilPriceDollars"]').val(oilPriceDollars.toFixed(2));
+            $('#formdata-view1 input[name="oilRevenuePayable"]').val(rst.toFixed(2));
         }
     </script>
 </head>
@@ -43,37 +87,37 @@
                                         <div class="form-group">
                                             <label class="col-md-3 control-label">含税油价（元/吨）</label>
                                             <div class="col-md-7">
-                                                <input name="" value="" type="text" class="form-control"/>
+                                                <input name="gasPriceTax" value="" type="text" class="form-control"/>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-md-3 control-label">不含税油价（元/吨）</label>
                                             <div class="col-md-7">
-                                                <input name="text" value="" type="text" class="form-control"/>
+                                                <input name="gasPriceNoTax" value="" type="text" class="form-control"/>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-md-3 control-label">汇率</label>
                                             <div class="col-md-7">
-                                                <input name="text" value="" type="text" class="form-control"/>
+                                                <input name="exchangeRate" value="" type="text" class="form-control"/>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-md-3 control-label">油价折合美元（元/桶）</label>
                                             <div class="col-md-7">
-                                                <input name="text" value="" type="text" class="form-control"/>
+                                                <input name="oilPriceDollars" value="" type="text" class="form-control"/>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-md-3 control-label">销量（吨）</label>
                                             <div class="col-md-7">
-                                                <input name="text" value="" type="text" class="form-control"/>
+                                                <input name="sales" value="" type="text" class="form-control"/>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-md-3 control-label">应交石油特别收益金（元/吨）</label>
                                             <div class="col-md-7">
-                                                <input name="text" value="" type="text" class="form-control"/>
+                                                <input name="oilRevenuePayable" value="" type="text" class="form-control"/>
                                             </div>
                                         </div>
                                     </div>
