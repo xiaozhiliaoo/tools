@@ -48,10 +48,22 @@
 
 
             const gasPriceTax = $('#formdata-view1 input[name="gasPriceTax"]').val();
-            let gasPriceNoTax = parseFloat(gasPriceTax) / 1.13;
             const exchangeRate = $('#formdata-view1 input[name="exchangeRate"]').val();
-            let oilPriceDollars = parseFloat(gasPriceNoTax) / exchangeRate / 7.45;
             const sales = $('#formdata-view1 input[name="sales"]').val();
+            if (!gasPriceTax) {
+                alert("含税油价不能为空")
+                return
+            }
+            if (!exchangeRate) {
+                alert("汇率不能为空")
+                return
+            }
+            if (!sales) {
+                alert("销量不能为空")
+                return
+            }
+            let gasPriceNoTax = parseFloat(gasPriceTax) / 1.13;
+            let oilPriceDollars = parseFloat(gasPriceNoTax) / exchangeRate / 7.45;
 
 
             const rst = calculateScore(exchangeRate, oilPriceDollars, sales);
@@ -87,13 +99,13 @@
                                         <div class="form-group">
                                             <label class="col-md-3 control-label">含税油价（元/吨）</label>
                                             <div class="col-md-7">
-                                                <input name="gasPriceTax" value="" type="text" class="form-control"/>
+                                                <input name="gasPriceTax" value="" type="text" class="form-control" placeholder=""/>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-md-3 control-label">不含税油价（元/吨）</label>
                                             <div class="col-md-7">
-                                                <input name="gasPriceNoTax" value="" type="text" class="form-control"/>
+                                                <input name="gasPriceNoTax" value="" type="text" class="form-control" placeholder="根据含税油价算出，可不填"/>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -105,7 +117,7 @@
                                         <div class="form-group">
                                             <label class="col-md-3 control-label">油价折合美元（元/桶）</label>
                                             <div class="col-md-7">
-                                                <input name="oilPriceDollars" value="" type="text" class="form-control"/>
+                                                <input name="oilPriceDollars" value="" type="text" class="form-control" placeholder="根据不含税油价和汇率算出，可不填"/>
                                             </div>
                                         </div>
                                         <div class="form-group">
