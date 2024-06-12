@@ -45,8 +45,6 @@
         }
 
         function calc() {
-
-
             const gasPriceTax = $('#formdata-view1 input[name="gasPriceTax"]').val();
             const exchangeRate = $('#formdata-view1 input[name="exchangeRate"]').val();
             const sales = $('#formdata-view1 input[name="sales"]').val();
@@ -64,8 +62,6 @@
             }
             let gasPriceNoTax = parseFloat(gasPriceTax) / 1.13;
             let oilPriceDollars = parseFloat(gasPriceNoTax) / exchangeRate / 7.45;
-
-
             const rst = calculateScore(exchangeRate, oilPriceDollars, sales);
             $('#formdata-view1 input[name="gasPriceNoTax"]').val(gasPriceNoTax.toFixed(2));
             $('#formdata-view1 input[name="oilPriceDollars"]').val(oilPriceDollars.toFixed(2));
@@ -76,9 +72,9 @@
 <body>
 <div class="container">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-10">
             <div class="jumbotron">
-                <h1>常用工具</h1>
+                <img src="../img/header.png" alt="描述性文字" class="img-responsive">
             </div>
         </div>
     </div>
