@@ -13,6 +13,10 @@
     <script src="../lvt4js.js"></script>
     <script type="text/javascript">
 
+        function numberWithCommas(x) {
+            return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+        }
+
         /**
          *
          * @param d3 汇率 exchangeRate
@@ -83,18 +87,17 @@
                 + parseFloat(resourceTax.toFixed(2))
                 + parseFloat(outputTax.toFixed(2))
                 + parseFloat(otherTax.toFixed(2))
-                + parseFloat(profitTax.toFixed(2))
                 + parseFloat(incomeTax.toFixed(2));
-            $('#formdata-view1 input[name="gasPriceNoTax"]').val(gasPriceNoTax.toFixed(2));
-            $('#formdata-view1 input[name="oilPriceDollars"]').val(oilPriceDollars.toFixed(2));
-            $('#formdata-view1 input[name="oilRevenuePayable"]').val(oilRevenuePayable.toFixed(2));
-            $('#formdata-view1 input[name="landReclamation"]').val(landReclamation.toFixed(2));
-            $('#formdata-view1 input[name="resourceTax"]').val(resourceTax.toFixed(2));
-            $('#formdata-view1 input[name="outputTax"]').val(outputTax.toFixed(2));
-            $('#formdata-view1 input[name="otherTax"]').val(otherTax.toFixed(2));
-            $('#formdata-view1 input[name="profitTax"]').val(profitTax.toFixed(2));
-            $('#formdata-view1 input[name="incomeTax"]').val(incomeTax.toFixed(2));
-            $('#formdata-view1 input[name="total"]').val(total.toFixed(2));
+            $('#formdata-view1 input[name="gasPriceNoTax"]').val(numberWithCommas(gasPriceNoTax.toFixed(2)));
+            $('#formdata-view1 input[name="oilPriceDollars"]').val(numberWithCommas(oilPriceDollars.toFixed(2)));
+            $('#formdata-view1 input[name="oilRevenuePayable"]').val(numberWithCommas(oilRevenuePayable.toFixed(2)));
+            $('#formdata-view1 input[name="landReclamation"]').val(numberWithCommas(landReclamation.toFixed(2)));
+            $('#formdata-view1 input[name="resourceTax"]').val(numberWithCommas(resourceTax.toFixed(2)));
+            $('#formdata-view1 input[name="outputTax"]').val(numberWithCommas(outputTax.toFixed(2)));
+            $('#formdata-view1 input[name="otherTax"]').val(numberWithCommas(otherTax.toFixed(2)));
+            $('#formdata-view1 input[name="profitTax"]').val(numberWithCommas(profitTax.toFixed(2)));
+            $('#formdata-view1 input[name="incomeTax"]').val(numberWithCommas(incomeTax.toFixed(2)));
+            $('#formdata-view1 input[name="total"]').val(numberWithCommas(total.toFixed(2)));
         }
     </script>
 </head>
