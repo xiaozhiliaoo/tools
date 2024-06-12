@@ -17,6 +17,10 @@
             return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
         }
 
+        function numberDropCommas(x) {
+            return x.replace(/,/gi, '');
+        }
+
         /**
          *
          * @param d3 汇率 exchangeRate
@@ -98,6 +102,34 @@
             $('#formdata-view1 input[name="profitTax"]').val(numberWithCommas(profitTax.toFixed(2)));
             $('#formdata-view1 input[name="incomeTax"]').val(numberWithCommas(incomeTax.toFixed(2)));
             $('#formdata-view1 input[name="total"]').val(numberWithCommas(total.toFixed(2)));
+        }
+
+        function convertTenThousand() {
+            const tenThousand = 10000;
+            var oilRevenuePayable = $('#formdata-view1 input[name="oilRevenuePayable"]').val();
+            $('#formdata-view1 input[name="oilRevenuePayable"]').val(numberWithCommas(parseFloat(numberDropCommas(oilRevenuePayable)) / tenThousand));
+
+            var landReclamation = $('#formdata-view1 input[name="landReclamation"]').val();
+            $('#formdata-view1 input[name="landReclamation"]').val(numberWithCommas(parseFloat(numberDropCommas(landReclamation)) / tenThousand));
+
+            var resourceTax = $('#formdata-view1 input[name="resourceTax"]').val();
+            $('#formdata-view1 input[name="resourceTax"]').val(numberWithCommas(parseFloat(numberDropCommas(resourceTax)) / tenThousand));
+
+            var outputTax = $('#formdata-view1 input[name="outputTax"]').val();
+            $('#formdata-view1 input[name="outputTax"]').val(numberWithCommas(parseFloat(numberDropCommas(outputTax)) / tenThousand));
+
+            var otherTax = $('#formdata-view1 input[name="otherTax"]').val();
+            $('#formdata-view1 input[name="otherTax"]').val(numberWithCommas(parseFloat(numberDropCommas(otherTax)) / tenThousand));
+
+            var profitTax = $('#formdata-view1 input[name="profitTax"]').val();
+            $('#formdata-view1 input[name="profitTax"]').val(numberWithCommas(parseFloat(numberDropCommas(profitTax)) / tenThousand));
+
+            var incomeTax = $('#formdata-view1 input[name="incomeTax"]').val();
+            $('#formdata-view1 input[name="incomeTax"]').val(numberWithCommas(parseFloat(numberDropCommas(incomeTax)) / tenThousand));
+
+            var total = $('#formdata-view1 input[name="total"]').val();
+            $('#formdata-view1 input[name="total"]').val(numberWithCommas(parseFloat(numberDropCommas(total)) / tenThousand));
+
         }
     </script>
 </head>
@@ -215,6 +247,11 @@
                                 <div class="col-md-7">
                                     <button id="formdata-btn1" onclick="calc()" type="button"
                                             class="btn btn-info btn-block btn-minier">计算
+                                    </button>
+                                </div>
+                                <div class="col-md-7">
+                                    <button id="formdata-btn2" onclick="convertTenThousand()" type="button"
+                                            class="btn btn-info btn-block btn-minier" style="margin:10px 0px;line-height:14px;">转化为万元
                                     </button>
                                 </div>
                             </div>
