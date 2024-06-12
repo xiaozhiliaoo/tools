@@ -77,9 +77,14 @@
             // 合计影响损益的税费（元/吨）=不含税油价*销量*(0.6%*0.7*1.1+4.8%+13%*10%+0.05%+0.03%)+石油特别收益金
             const profitTax = gasPriceNoTax * parseFloat(sales) * (0.006 * 0.7 * 1.1 + 0.048 + 0.13 * 0.10 + 0.0005 + 0.0003);
             // 所得税（元/吨）=(不含税油价*销量-合计影响损益的税费)*15%
-            const incomeTax = (gasPriceNoTax * parseFloat(sales) - totalTax) * 0.15;
-            const total = oilRevenuePayable.toFixed(2) + landReclamation.toFixed(2) + resourceTax.toFixed(2) +
-                outputTax.toFixed(2) + otherTax.toFixed(2) + profitTax.toFixed(2) + incomeTax.toFixed(2)
+            const incomeTax = (gasPriceNoTax * parseFloat(sales) - profitTax) * 0.15;
+            const total = parseFloat(oilRevenuePayable.toFixed(2))
+                + parseFloat(landReclamation.toFixed(2))
+                + parseFloat(resourceTax.toFixed(2))
+                + parseFloat(outputTax.toFixed(2))
+                + parseFloat(otherTax.toFixed(2))
+                + parseFloat(profitTax.toFixed(2))
+                + parseFloat(incomeTax.toFixed(2));
             $('#formdata-view1 input[name="gasPriceNoTax"]').val(gasPriceNoTax.toFixed(2));
             $('#formdata-view1 input[name="oilPriceDollars"]').val(oilPriceDollars.toFixed(2));
             $('#formdata-view1 input[name="oilRevenuePayable"]').val(oilRevenuePayable.toFixed(2));
