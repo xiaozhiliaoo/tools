@@ -60,12 +60,30 @@
                 alert("销量不能为空")
                 return
             }
+            // 不含税油价（元/吨）
             let gasPriceNoTax = parseFloat(gasPriceTax) / 1.13;
+            // 油价折合美元（元/桶）
             let oilPriceDollars = parseFloat(gasPriceNoTax) / exchangeRate / 7.45;
-            const rst = calculateScore(exchangeRate, oilPriceDollars, sales);
+            // 应交石油特别收益金（元/吨）
+            const oilRevenuePayable = calculateScore(exchangeRate, oilPriceDollars, sales);
+            // 应交土地复垦基金（元/吨）=不含税油价*销量*0.6%*0.7*1.1
+            const landReclamation = gasPriceNoTax * parseFloat(sales) * 0.006 * 0.7 * 1.1;
+            // 应交资源税（元/吨）=不含税油价*销量*4.8%
+            const resourceTax = gasPriceNoTax * parseFloat(sales) * 0.048;
+            // 其他税费及附加（元/吨）=不含税油价*销量*(13%*10%+0.05%+0.03%)
+            const otherTax = gasPriceNoTax * parseFloat(sales) * (0.13 * 0.1 + 0.0008);
+            // 合计影响损益的税费（元/吨）=不含税油价*销量*(0.6%*0.7*1.1+4.8%+13%*10%+0.05%+0.03%)+石油特别收益金
+            const totalTax = gasPriceNoTax * parseFloat(sales) * (0.006 * 0.7 * 1.1+ 0.048 + 0.13 * 0.10 + 0.0005+0.0003);
+            // 所得税（元/吨）=(不含税油价*销量-合计影响损益的税费)*15%
+            const incomeTax = (gasPriceNoTax * parseFloat(sales) - totalTax) * 0.15;
             $('#formdata-view1 input[name="gasPriceNoTax"]').val(gasPriceNoTax.toFixed(2));
             $('#formdata-view1 input[name="oilPriceDollars"]').val(oilPriceDollars.toFixed(2));
-            $('#formdata-view1 input[name="oilRevenuePayable"]').val(rst.toFixed(2));
+            $('#formdata-view1 input[name="oilRevenuePayable"]').val(oilRevenuePayable.toFixed(2));
+            $('#formdata-view1 input[name="landReclamation"]').val(landReclamation.toFixed(2));
+            $('#formdata-view1 input[name="resourceTax"]').val(resourceTax.toFixed(2));
+            $('#formdata-view1 input[name="otherTax"]').val(otherTax.toFixed(2));
+            $('#formdata-view1 input[name="totalTax"]').val(totalTax.toFixed(2));
+            $('#formdata-view1 input[name="incomeTax"]').val(incomeTax.toFixed(2));
         }
     </script>
 </head>
@@ -87,19 +105,19 @@
             <div id="formData" role="tabpanel" class="tab-pane active">
                 <div class="col-md-12">
                     <div class="panel panel-default">
-                        <div class="panel-heading">石油特别收益金计算</div>
+                        <div class="panel-heading">石油相关税费计算</div>
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-md-8">
                                     <div id="formdata-view1" class="form-horizontal">
                                         <div class="form-group">
-                                            <label class="col-md-3 control-label">含税油价（元/吨）</label>
+                                            <label class="col-md-3 control-label">含税油价（元）</label>
                                             <div class="col-md-7">
                                                 <input name="gasPriceTax" value="" type="text" class="form-control" placeholder=""/>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-md-3 control-label">不含税油价（元/吨）</label>
+                                            <label class="col-md-3 control-label">不含税油价（元）</label>
                                             <div class="col-md-7">
                                                 <input name="gasPriceNoTax" value="" type="text" class="form-control" placeholder="根据含税油价算出，可不填"/>
                                             </div>
@@ -123,9 +141,39 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-md-3 control-label">应交石油特别收益金（元/吨）</label>
+                                            <label class="col-md-3 control-label">应交石油特别收益金（元）</label>
                                             <div class="col-md-7">
                                                 <input name="oilRevenuePayable" value="" type="text" class="form-control"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">应交土地复垦基金（元）</label>
+                                            <div class="col-md-7">
+                                                <input name="landReclamation" value="" type="text" class="form-control"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">应交资源税（元）</label>
+                                            <div class="col-md-7">
+                                                <input name="resourceTax" value="" type="text" class="form-control"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">其他税费及附加（元）</label>
+                                            <div class="col-md-7">
+                                                <input name="otherTax" value="" type="text" class="form-control"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">合计影响损益的税费（元）</label>
+                                            <div class="col-md-7">
+                                                <input name="totalTax" value="" type="text" class="form-control"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">所得税（元）</label>
+                                            <div class="col-md-7">
+                                                <input name="incomeTax" value="" type="text" class="form-control"/>
                                             </div>
                                         </div>
                                     </div>
