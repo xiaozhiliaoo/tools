@@ -85,7 +85,7 @@
             // 其他税费及附加（元/吨）=不含税油价*销量*(13%*10%+0.05%+0.03%)
             const otherTax = gasPriceNoTax * parseFloat(sales) * (0.13 * 0.1 + 0.0005 + 0.0003);
             // 合计影响损益的税费（元/吨）=不含税油价*销量*(0.6%*0.7*1.1+4.8%+13%*10%+0.05%+0.03%)+石油特别收益金
-            const profitTax = gasPriceNoTax * parseFloat(sales) * (0.006 * 0.7 * 1.1 + 0.048 + 0.13 * 0.10 + 0.0005 + 0.0003);
+            const profitTax = gasPriceNoTax * parseFloat(sales) * (0.006 * 0.7 * 1.1 + 0.048 + 0.13 * 0.10 + 0.0005 + 0.0003) + oilRevenuePayable;
             // 所得税（元/吨）=(不含税油价*销量-合计影响损益的税费)*15%
             const incomeTax = (gasPriceNoTax * parseFloat(sales) - profitTax) * 0.15;
             const total = parseFloat(oilRevenuePayable.toFixed(2))
