@@ -13,6 +13,8 @@
     <script src="../lvt4js.js"></script>
     <script type="text/javascript">
 
+        var convertClickCount = 0;
+
         function numberWithCommas(x) {
             return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
         }
@@ -102,33 +104,40 @@
             $('#formdata-view1 input[name="profitTax"]').val(numberWithCommas(profitTax.toFixed(2)));
             $('#formdata-view1 input[name="incomeTax"]').val(numberWithCommas(incomeTax.toFixed(2)));
             $('#formdata-view1 input[name="total"]').val(numberWithCommas(total.toFixed(2)));
+            // 点击次数清空
+            convertClickCount = 0;
+            $('#formdata-btn2').attr('disabled', false);
         }
 
         function convertTenThousand() {
+            convertClickCount++
+            if (convertClickCount >= 2) {
+                $('#formdata-btn2').attr('disabled', true);
+            }
             const tenThousand = 10000;
             var oilRevenuePayable = $('#formdata-view1 input[name="oilRevenuePayable"]').val();
-            $('#formdata-view1 input[name="oilRevenuePayable"]').val(numberWithCommas(parseFloat(numberDropCommas(oilRevenuePayable)) / tenThousand));
+            $('#formdata-view1 input[name="oilRevenuePayable"]').val(numberWithCommas((parseFloat(numberDropCommas(oilRevenuePayable)) / tenThousand).toFixed(2)));
 
             var landReclamation = $('#formdata-view1 input[name="landReclamation"]').val();
-            $('#formdata-view1 input[name="landReclamation"]').val(numberWithCommas(parseFloat(numberDropCommas(landReclamation)) / tenThousand));
+            $('#formdata-view1 input[name="landReclamation"]').val(numberWithCommas((parseFloat(numberDropCommas(landReclamation)) / tenThousand).toFixed(2)));
 
             var resourceTax = $('#formdata-view1 input[name="resourceTax"]').val();
-            $('#formdata-view1 input[name="resourceTax"]').val(numberWithCommas(parseFloat(numberDropCommas(resourceTax)) / tenThousand));
+            $('#formdata-view1 input[name="resourceTax"]').val(numberWithCommas((parseFloat(numberDropCommas(resourceTax)) / tenThousand).toFixed(2)));
 
             var outputTax = $('#formdata-view1 input[name="outputTax"]').val();
-            $('#formdata-view1 input[name="outputTax"]').val(numberWithCommas(parseFloat(numberDropCommas(outputTax)) / tenThousand));
+            $('#formdata-view1 input[name="outputTax"]').val(numberWithCommas((parseFloat(numberDropCommas(outputTax)) / tenThousand).toFixed(2)));
 
             var otherTax = $('#formdata-view1 input[name="otherTax"]').val();
-            $('#formdata-view1 input[name="otherTax"]').val(numberWithCommas(parseFloat(numberDropCommas(otherTax)) / tenThousand));
+            $('#formdata-view1 input[name="otherTax"]').val(numberWithCommas((parseFloat(numberDropCommas(otherTax)) / tenThousand).toFixed(2)));
 
             var profitTax = $('#formdata-view1 input[name="profitTax"]').val();
-            $('#formdata-view1 input[name="profitTax"]').val(numberWithCommas(parseFloat(numberDropCommas(profitTax)) / tenThousand));
+            $('#formdata-view1 input[name="profitTax"]').val(numberWithCommas((parseFloat(numberDropCommas(profitTax)) / tenThousand).toFixed(2)));
 
             var incomeTax = $('#formdata-view1 input[name="incomeTax"]').val();
-            $('#formdata-view1 input[name="incomeTax"]').val(numberWithCommas(parseFloat(numberDropCommas(incomeTax)) / tenThousand));
+            $('#formdata-view1 input[name="incomeTax"]').val(numberWithCommas((parseFloat(numberDropCommas(incomeTax)) / tenThousand).toFixed(2)));
 
             var total = $('#formdata-view1 input[name="total"]').val();
-            $('#formdata-view1 input[name="total"]').val(numberWithCommas(parseFloat(numberDropCommas(total)) / tenThousand));
+            $('#formdata-view1 input[name="total"]').val(numberWithCommas((parseFloat(numberDropCommas(total)) / tenThousand).toFixed(2)));
 
         }
     </script>
@@ -251,7 +260,9 @@
                                 </div>
                                 <div class="col-md-7">
                                     <button id="formdata-btn2" onclick="convertTenThousand()" type="button"
-                                            class="btn btn-info btn-block btn-minier" style="margin:10px 0px;line-height:14px;">转化为万元
+                                            name="formdata-btn2"
+                                            class="btn btn-info btn-block btn-minier"
+                                            style="margin:10px 0px;line-height:14px;">转化为万元(二次点击转化为亿元)
                                     </button>
                                 </div>
                             </div>
