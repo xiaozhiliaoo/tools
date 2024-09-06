@@ -51,7 +51,7 @@
                 result = (e3Value - 65) * 0.4 - 2.5;
             }
 
-            return result * d3Value * f3Value * 7.45;
+            return result * d3Value * f3Value * 7.3;
         }
 
         function calc() {
@@ -73,7 +73,7 @@
             // 不含税油价（元/吨）
             let gasPriceNoTax = parseFloat(gasPriceTax) / 1.13;
             // 油价折合美元（元/桶）
-            let oilPriceDollars = parseFloat(gasPriceNoTax) / exchangeRate / 7.45;
+            let oilPriceDollars = parseFloat(gasPriceNoTax) / exchangeRate / 7.3;
             // 应交石油特别收益金（元/吨）
             const oilRevenuePayable = calculateScore(exchangeRate, oilPriceDollars, sales);
             // 应交土地复垦基金（元/吨）=不含税油价*销量*0.6%*0.7*1.1
